@@ -86,12 +86,12 @@ while True:
 		break
 
 """
-def displayRefresh():
-	FETCH = inst.query("FETC?")
-	print(FETCH)
-	print(PRI_DIS)
-	print(SEC_DIS)
-	print(TOL_DIS)
+def displayRefresh():					# Testing display values
+	FETCH = inst.query("FETC?")			# Refresh
+	print(FETCH)						# RAW concatenated values
+	print(PRI_DIS)						# Primary
+	print(SEC_DIS)						# Secondary
+	print(TOL_DIS)						# Tolerance
 	time.sleep(1)
 
 while True:
