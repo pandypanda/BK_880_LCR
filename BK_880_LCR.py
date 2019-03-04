@@ -1,13 +1,13 @@
-#############################################################################
-# 				Andy's test for BK Precision LCR Meter 880					#
-# 				Using SCPI command thru Python with VISA module				#
-#				Visit https://pyvisa.readthedocs.io for install				#
-#############################################################################
-# Com negociated/conf by VISA 												#
-# Baudrate : 9600			Data bits : 8			Flow Control : None		#
-# Parity   : None			Stop bits : 1									#
+#################################################################################
+# 		Andy's test for BK Precision LCR Meter 880			#
+# 		Using SCPI command thru Python with VISA module			#
+#		Visit https://pyvisa.readthedocs.io for install			#
+#################################################################################
+# Com negociated/conf by VISA 							#
+# Baudrate : 9600	Data bits : 8		Flow Control : None		#
+# Parity   : None	Stop bits : 1						#
 # Host returning a result after a querry command : <Result> + <CR> <LF>		#
-#############################################################################
+#################################################################################
 
 
 import visa
@@ -22,12 +22,12 @@ inst = rm.open_resource('ASRL/dev/ttyUSB1::INSTR')
 
 # Status Querry
 ID = inst.query("*IDN?")			# ID of the device
-LOCK = 0							# Store the Lockout status (see *LLO and *GTL)
+LOCK = 0					# Store the Lockout status (see *LLO and *GTL)
 FREQ = inst.query("FREQ?")			# Mesurement frequency <100|120|1k|10k|100k>
 VOLT = inst.query("VOLT?")			# Mesurement voltage <0.3v|0.6v|1v>
-FUNC_A = inst.query("FUNC:impa?")	# Primary <L|C|R|Z|DCR|NULL>
-FUNC_B = inst.query("FUNC:impb?")	# Secondary <D|Q|THETA|ESR|NULL>
-MODE = inst.query("FUNC:EQU?")		# Equivalent mode <SER|PAL>
+FUNC_A = inst.query("FUNC:impa?")		# Primary <L|C|R|Z|DCR|NULL>
+FUNC_B = inst.query("FUNC:impb?")		# Secondary <D|Q|THETA|ESR|NULL>
+MODE = inst.query("FUNC:EQU?")			# Equivalent mode <SER|PAL>
 
 # Tolerance mode variables
 TOL_STAT = inst.query("CALC:TOL:STAT?")		# Status <ON|OFF>
