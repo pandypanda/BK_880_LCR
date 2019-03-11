@@ -57,7 +57,7 @@ class Widget(QWidget):
             x, y = pos
             btn = QPushButton(self.rightFrame)
             btn.setText(name)
-            self.gridLayout.addWidget(btn, x+6, y)      # x+4 = hauteur affichages LCDs
+            self.gridLayout.addWidget(btn, x+6, y)      # x+6 = hauteur affichages LCDs
             # When btn is clicked, send his 'name' to 'make_callfunction'
             btn.clicked.connect(self.make_callfunction(name))
         self.verticalLayout.addLayout(self.gridLayout)
