@@ -15,6 +15,11 @@ The GUI needs PyQt5 (see 'GUI' code)
 This is my first proper program (with a GUI) in Python... not finished yet :).
 Feel free to comment / help as Im new to Python (more used to #ASM on µC and x86)
 
+Update (13 march 2019):
+  -  	GUI_880_LCR_MERGE.py  <-- trying to bodge together the GUI and the prog ;)
+      Quite crude for now but command of functions works (need to add more/finish)
+      Primary and secondary display not functionnal yet....
+
 TODO (11 march 2019):
   - Functions to compute and format the primary and secondary display
     format +/_ 6 digits +exp (+6.74095e-13) TO -/+ 6 digits and readable unit (46.8274 µF)
