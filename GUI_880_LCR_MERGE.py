@@ -63,7 +63,7 @@ PRI_DIS, SEC_DIS = FETCH.split(",", 1)      # Isolate the Primary value
 SEC_DIS, TOL_DIS = SEC_DIS.split(",", 1)    # Isolate the Secondary and Tolerance
 
 #--------------------------------------------------------------------------
-
+"""
 def startupInfo():                      # Info that dont change
     ID = inst.query("*IDN?")            # ID of the device
 
@@ -92,7 +92,7 @@ def displayRefresh():                           # Continuous display refresh
     FETCH = inst.query("FETC?")                 # If LCR <NR3,NR3,NR1>, if DCR <NR3,NR1>
     PRI_DIS, SEC_DIS = FETCH.split(",", 1)      # Isolate the Primary value
     SEC_DIS, TOL_DIS = SEC_DIS.split(",", 1)    # Isolate the Secondary and Tolerance
-
+"""
 #--------------------------------------------------------------------------
 
 def sendCommand(n):
@@ -135,8 +135,29 @@ def sendCommand(n):
             inst.query("FUNC:EQU SER")
         elif n == 'PAL':
             inst.query("FUNC:EQU PAL")
+        elif n == 'TOL':
+ #           if TOL_STAT == "OFF":
+            inst.query("CALC:TOL:STAT ON")      # ON / OFF toggle
+ #           else :
+ #               inst.query("CALC:TOL:STAT OFF")
+        elif n == '1%':
+            inst.query("CALC:TOL:RANG 1")
+        elif n == '5%':
+            inst.query("CALC:TOL:RANG 5")
+        elif n == '10%':
+            inst.query("CALC:TOL:RANG 10")
+        elif n == '20%':
+            inst.query("CALC:TOL:RANG 20")
+        elif n == 'LLO':
+            inst.query("*LLO")
+        elif n == 'GTL':
+            inst.query("*GTL")
+        elif n == 'REC':
+            inst.query("CALC:REC:STAT ON")      # ON / OFF toggle
+        elif n == 'TRG':
+            inst.query("*TRG")
         else:
-            return #displayRefresh
+            return
 
 #--------------------------------------------------------------------------
 class Widget(QWidget):
@@ -147,7 +168,7 @@ class Widget(QWidget):
     def layoutUI(self):
         self.setStyleSheet("background-color: purple;")
         # Set ID of the instrument via a var = *IDN?
-        self.setWindowTitle('inst')
+        self.setWindowTitle(ID)
 
         self.principalLayout = QHBoxLayout(self)
 
