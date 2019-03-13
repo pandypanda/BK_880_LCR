@@ -31,11 +31,15 @@ rm.list_resources()
 # Port path copied from visa console '>list'
 inst = rm.open_resource('ASRL/dev/ttyUSB0::INSTR')
 
+inst.baud_rate = 9600
+inst.data_bits = 8
+inst.stopBits = 1
+inst.write_termination= '\r\n'
+inst.read_termination = '\r\n'
 
 # Defining meter status and functions variables
 #
 ID = inst.query("*IDN?")            # ID of the device
-LOCK = 0                            # Lockout status (see *LLO and *GTL) set to 0
 
 # Current functions variables
 FREQ = inst.query("FREQ?")          # Mesurement frequency <100|120|1k|10k|100k>
@@ -87,13 +91,28 @@ def recStatus():
     REC_MAX = inst.query("CALC:REC:MAX?")       # Maximum value <NR3,NR3|-->
     REC_AVG = inst.query("CALC:REC:AVER?")      # Average value <NR3,NR3|-->
     REC_INST = inst.query("CALC:REC:PRES?")     # Present value <NR3,NR3|-->
-
+"""
 def displayRefresh():                           # Continuous display refresh
     FETCH = inst.query("FETC?")                 # If LCR <NR3,NR3,NR1>, if DCR <NR3,NR1>
     PRI_DIS, SEC_DIS = FETCH.split(",", 1)      # Isolate the Primary value
     SEC_DIS, TOL_DIS = SEC_DIS.split(",", 1)    # Isolate the Secondary and Tolerance
-"""
+
 #--------------------------------------------------------------------------
+def tolTest():
+    t = inst.query("CALC:TOL:STAT?")     # Status <ON|OFF>
+    if t == "OFF":
+        inst.query("CALC:TOL:STAT ON")
+    else:
+        inst.query("CALC:TOL:STAT OFF")
+
+
+def recTest():
+    r = inst.query("CALC:REC:STAT?")     # Status <ON|OFF>
+    if r == 'OFF':
+        inst.query("CALC:REC:STAT ON")
+    else:
+        inst.query("CALC:REC:STAT OFF")
+
 
 def sendCommand(n):
     while True:
@@ -136,10 +155,7 @@ def sendCommand(n):
         elif n == 'PAL':
             inst.query("FUNC:EQU PAL")
         elif n == 'TOL':
- #           if TOL_STAT == "OFF":
-            inst.query("CALC:TOL:STAT ON")      # ON / OFF toggle
- #           else :
- #               inst.query("CALC:TOL:STAT OFF")
+            tolTest()                       # ON / OFF toggle
         elif n == '1%':
             inst.query("CALC:TOL:RANG 1")
         elif n == '5%':
@@ -153,11 +169,11 @@ def sendCommand(n):
         elif n == 'GTL':
             inst.query("*GTL")
         elif n == 'REC':
-            inst.query("CALC:REC:STAT ON")      # ON / OFF toggle
+            recTest()                       # ON / OFF toggle
         elif n == 'TRG':
             inst.query("*TRG")
         else:
-            return
+            return callfunction
 
 #--------------------------------------------------------------------------
 class Widget(QWidget):
@@ -208,12 +224,16 @@ class Widget(QWidget):
     # Print the 'name' of the clicked btn inthe console
     def make_callfunction(self, name):
             def callfunction():
-                #print(name)
+#                print(name)
+                displayRefresh()
                 sendCommand(name)
                 #time.sleep(1)
             return callfunction
 
-
+"""            while True:
+                time.sleep(1)
+                make_callfunction()
+"""
 #--------------------------------------------------------------------------
 
 
