@@ -31,11 +31,16 @@ rm.list_resources()
 # Port path copied from visa console '>list'
 inst = rm.open_resource('ASRL/dev/ttyUSB0::INSTR')
 
+CR = '\r'
+LF = '\n'
+#inst.allow_dma = True
 inst.baud_rate = 9600
 inst.data_bits = 8
 inst.stopBits = 1
-inst.write_termination= '\r\n'
+inst.write_termination = '\r\n'
 inst.read_termination = '\r\n'
+#inst.capture_timeout = None
+#inst.timeout = 10000
 
 # Defining meter status and functions variables
 #
@@ -96,6 +101,7 @@ def displayRefresh():                           # Continuous display refresh
     FETCH = inst.query("FETC?")                 # If LCR <NR3,NR3,NR1>, if DCR <NR3,NR1>
     PRI_DIS, SEC_DIS = FETCH.split(",", 1)      # Isolate the Primary value
     SEC_DIS, TOL_DIS = SEC_DIS.split(",", 1)    # Isolate the Secondary and Tolerance
+#    return layoutUI(PRI_DIS, SEC_DIS)
 
 #--------------------------------------------------------------------------
 def tolTest():
@@ -194,12 +200,14 @@ class Widget(QWidget):
         self.verticalLayout = QVBoxLayout(self.rightFrame)
         self.gridLayout = QGridLayout()
 
-        # Affichage LCD PRIMARY
-        self.lcdPRI = QLCDNumber()
-        self.gridLayout.addWidget(self.lcdPRI, 0, 0, 2, 0)
         # Affichage LCD SECONDARY
         self.lcdSEC = QLCDNumber()
-        self.gridLayout.addWidget(self.lcdSEC, 2, 0, 4, 0)
+        self.lcdSEC.setDigitCount(12)                       # Number of digits
+        self.gridLayout.addWidget(self.lcdSEC, 2, 0, 4, 0)  # Position in the grid
+        # Affichage LCD PRIMARY
+        self.lcdPRI = QLCDNumber()
+        self.lcdPRI.setDigitCount(12)                       # Number of digits
+        self.gridLayout.addWidget(self.lcdPRI, 0, 0, 2, 0)  # Position in the grid
 
         btns = {(0, 0): "L", (0, 1): "C", (0, 2): "R", (0, 3): "Z", (0, 4): "DCR",
                 (1, 0): "D", (1, 1): "Q", (1, 3): "THETA", (1, 4): "ESR",
@@ -226,14 +234,14 @@ class Widget(QWidget):
             def callfunction():
 #                print(name)
                 displayRefresh()
-                sendCommand(name)
-                #time.sleep(1)
+#                sendCommand(name)
+#                time.sleep(1)
             return callfunction
 
-"""            while True:
+            while True:
                 time.sleep(1)
                 make_callfunction()
-"""
+
 #--------------------------------------------------------------------------
 
 
