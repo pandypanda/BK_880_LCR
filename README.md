@@ -15,6 +15,21 @@ The GUI needs PyQt5 (see 'GUI' code)
 This is my first proper program (with a GUI) in Python... not finished yet :).
 Feel free to comment / help as Im new to Python (more used to #ASM on µC and x86)
 
+Update (15 march 2019):
+  - Update continues on 'GUI_880_LCR_MERGE.py'
+    LCD display set on 12 digits display
+    Inverted PRI and SEC display (as the real meter) to layout the GUI as follow:
+            > Secondary display
+            > Primary display
+            > Keypad
+  - TODO:
+      - Refresh the display continuously
+      - Taccle the VISA timeout error happening while changing function:
+        pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+      - Display the unit after the 'LCD'
+      - Hide keypad option
+      - ... :)
+
 Update (13 march 2019):
   -  	GUI_880_LCR_MERGE.py  <-- trying to bodge together the GUI and the prog ;)
       Quite crude for now but command of functions works (need to add more/finish)
