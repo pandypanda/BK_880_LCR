@@ -200,14 +200,15 @@ class Widget(QWidget):
         self.verticalLayout = QVBoxLayout(self.rightFrame)
         self.gridLayout = QGridLayout()
 
-        # Affichage LCD SECONDARY
-        self.lcdSEC = QLCDNumber()
-        self.lcdSEC.setDigitCount(12)                       # Number of digits
-        self.gridLayout.addWidget(self.lcdSEC, 2, 0, 4, 0)  # Position in the grid
         # Affichage LCD PRIMARY
         self.lcdPRI = QLCDNumber()
         self.lcdPRI.setDigitCount(12)                       # Number of digits
-        self.gridLayout.addWidget(self.lcdPRI, 0, 0, 2, 0)  # Position in the grid
+        self.gridLayout.addWidget(self.lcdPRI, 2, 0, 4, 0)  # Position in the grid
+        # Affichage LCD SECONDARY
+        self.lcdSEC = QLCDNumber()
+        self.lcdSEC.setDigitCount(12)                       # Number of digits
+        self.gridLayout.addWidget(self.lcdSEC, 0, 0, 2, 0)  # Position in the grid
+
 
         btns = {(0, 0): "L", (0, 1): "C", (0, 2): "R", (0, 3): "Z", (0, 4): "DCR",
                 (1, 0): "D", (1, 1): "Q", (1, 3): "THETA", (1, 4): "ESR",
@@ -237,11 +238,11 @@ class Widget(QWidget):
 #                sendCommand(name)
 #                time.sleep(1)
             return callfunction
-
+"""
             while True:
                 time.sleep(1)
                 make_callfunction()
-
+"""
 #--------------------------------------------------------------------------
 
 
